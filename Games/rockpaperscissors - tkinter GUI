@@ -1,0 +1,67 @@
+import tkinter as tk
+import random
+import time
+
+window =tk.Tk()
+window.geometry("340x120")
+window.title("Roc Paper Scissors")
+PLAYER_SCORE = 0
+COMP_SCORE=0
+PLAYER_CHOICE=""
+COMP_CHOICE=""
+
+def choiceToNumber(choice):
+    rps = {'rock':0, 'paper':1, 'scissors':2}
+    return rps[choice]
+
+def randChoice():
+    return random.choice(['rock', 'paper', 'scissors'])
+
+def result(humanChoice, compChoice):
+    global PLAYER_SCORE
+    global COMP_SCORE
+    player = choiceToNumber(humanChoice)
+    comp = choiceToNumber(compChoice)
+    if player==comp:
+        print("Tie")
+    elif (player-comp)%3==1:
+        print("Player Wins!")
+        PLAYER_SCORE+=1
+    else:
+        print("Computer Wins!")
+        COMP_SCORE+=1
+
+    text_area = tk.Text(window, height=5, width=25, bg="#FFFF99")
+    text_area.grid(column=0, row=6)
+    answer = "Your choice: {uc} \nComputer choice {cc} \nYour score {us} \nComputer score {cs}".format(uc=PLAYER_CHOICE, cc=COMP_CHOICE, us=PLAYER_SCORE, cs=COMP_SCORE)
+    text_area.insert(tk.END, answer)
+
+def rock():
+    global PLAYER_CHOICE
+    global COMP_CHOICE
+    PLAYER_CHOICE="rock"
+    COMP_CHOICE=randChoice()
+    result(PLAYER_CHOICE, COMP_CHOICE)
+
+def paper():
+    global PLAYER_CHOICE
+    global COMP_CHOICE
+    PLAYER_CHOICE='paper'
+    COMP_CHOICE=randChoice()
+    result(PLAYER_CHOICE, COMP_CHOICE)
+
+def scissors():
+    global PLAYER_CHOICE
+    global COMP_CHOICE
+    PLAYER_CHOICE='scissors'
+    COMP_CHOICE=randChoice()
+    result(PLAYER_CHOICE, COMP_CHOICE)
+
+btn_rock = tk.Button(text = "Rock", bg="skyblue", command=rock)
+btn_rock.grid(column=1, row=1)
+btn_paper = tk.Button(text = "Paper", bg="white", command=paper)
+btn_paper.grid(column=2, row=1)
+btn_scissors = tk.Button(text = "Scissors", bg="lightgreen", command = scissors)
+btn_scissors.grid(column=3, row=1)
+
+window.mainloop()
